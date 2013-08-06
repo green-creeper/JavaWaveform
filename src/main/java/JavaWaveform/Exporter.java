@@ -1,6 +1,8 @@
 package JavaWaveform;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
 import java.util.Scanner;
 
 /**
@@ -12,20 +14,34 @@ import java.util.Scanner;
  */
 public class Exporter {
     int[] audioData;
-    public static final String TEMPLATE_FILE="wf.html";
+    public static final String TEMPLATE_FILE = "wf.html";
     //Control points count
-    public static final int PRECISION=1500;
+    public static final int PRECISION = 1500;
     //Highest peak in audio file
     public static final int NORMALIZATION_FACTOR = 4000;
 
     public Exporter(int[] audioData) {
         this.audioData = audioData;
+    }
+
+    protected void openFile() {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new File("output.html").toURI());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void export() {
         String templateString = null;
         try {
             templateString = new Scanner(new File(TEMPLATE_FILE)).useDelimiter("\\Z").next();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < audioData.length; i += (audioData.length / PRECISION)) {

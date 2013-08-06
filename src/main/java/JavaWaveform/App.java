@@ -43,7 +43,9 @@ public class App {
             sampleIndex++;
         }
 
-        new Exporter(toReturn);
+        Exporter exporter = new Exporter(toReturn);
+        exporter.export();
+        exporter.openFile();
     }
 
     private static int getSixteenBitSample(int high, int low) {
