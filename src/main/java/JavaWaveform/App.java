@@ -43,24 +43,7 @@ public class App {
             sampleIndex++;
         }
 
-        Writer writer = null;
-
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("data.txt"), "utf-8"));
-            writer.write("[");
-            for (int i = 0; i < toReturn.length; i += (toReturn.length / 1500)) {
-                writer.write(Double.valueOf(toReturn[i]) / 4000 + ",");
-            }
-            writer.write("]");
-        } catch (IOException ex) {
-            // report
-        } finally {
-            try {
-                writer.close();
-            } catch (Exception ex) {
-            }
-        }
+        new Exporter(toReturn);
     }
 
     private static int getSixteenBitSample(int high, int low) {
